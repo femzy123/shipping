@@ -6,14 +6,19 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 
-const Content = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const ItemContainer = styled.div`
   padding: 0.5rem;
   border-radius: 4px;
   box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
   width: 100%;
+`;
+
+
+const Content = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 `;
 
 const Countries = [
@@ -27,7 +32,7 @@ const Countries = [
   },
 ];
 
-function Form() {
+function Form({ close }) {
   const [country, setCountry] = useState("US");
   const [address, setAddress] = useState("");
   const [state, setState] = useState("")
@@ -67,14 +72,14 @@ function Form() {
        name: "",
        weight: 0,
      };
-     setForms([...forms, data]);
+     setItems([...items, data]);
    };
 
    const removeForm = (index) => {
-     const newForms = [...forms];
-     if (forms.length > 1) {
-       newForms.splice(index, 1);
-       setForms(newForms);
+     const newItems = [...items];
+     if (items.length > 1) {
+       newItems.splice(index, 1);
+       setItems(newItems);
      }
    };
 
@@ -131,11 +136,11 @@ function Form() {
       />
       <br />
       <br />
-      
+
       <h4 className="text-sm">Add Items to be Shipped</h4>
-      <Content className="mt-3">
+      <ItemContainer className="mt-3">
         {items.map((item, i) => (
-          <>
+          <Content>
             <TextField
               label="Name"
               type="text"
@@ -150,13 +155,22 @@ function Form() {
               value={item.weight}
               onChange={(e) => handleChangeWeight(i, e.target.value)}
             />
-            <DeleteForeverIcon color="secondary" />
-          </>
-          
+            <DeleteForeverIcon color="secondary" onClick={removeForm} />
+          </Content>
         ))}
-      </Content>
+      </ItemContainer>
       <div className="mt-4 text-center text-sm pointer">
-        <AddCircleOutlineIcon color="disabled" /> <span className="text-gray-400">Add Item</span>
+        <AddCircleOutlineIcon color="disabled" onClick={addForm} />{" "}
+        <span className="text-gray-400">Add Item</span>
+      </div>
+
+      <div className="flex items-center justify-around mt-5">
+        <Button variant="contained" color="secondary" onClick={close}>
+          Close
+        </Button>
+        <Button variant="contained" color="primary">
+          Create Shipping Order
+        </Button>
       </div>
     </div>
   );

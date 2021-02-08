@@ -1,7 +1,8 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
+import { SubjectSharp } from "@material-ui/icons";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default MyApp;

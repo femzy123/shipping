@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
 function Table() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+
+  const close = () => setOpen(false);
+
   return (
     <div>
       <TopMenu className="mb-4">
@@ -113,7 +116,7 @@ function Table() {
 
       <Modal open={open} onClose={(e) => setOpen(false)} className={classes.modal}>
         <div className={classes.paper}>
-          <Form />
+          <Form close={close} />
         </div>
       </Modal>
     </div>
