@@ -1,7 +1,20 @@
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { useAuth } from '../../contexts/AuthContext'
+import { auth } from "../../firebase";
+import Link from 'next/link';
 
 
 const Navigation = () => {
+  const { currentUser } = useAuth();
+  const router = useRouter();
+
+  const signOut = () => {
+    auth.signOut();
+    router.push('/login');
+  }
+
+  console.log(currentUser);
   return (
     <>
       <header className="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-3 py-2">
@@ -34,35 +47,59 @@ const Navigation = () => {
               <li>
                 <a
                   className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-                  href="/"
-                >
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a
-                  className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                   href="/calculator"
                 >
                   Calculator
                 </a>
               </li>
-              <li>
-                <a
-                  className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-                  href="#"
-                >
-                  Login
-                </a>
-              </li>
-              <li>
-                <a
-                  className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-                  href="#"
-                >
-                  Sign Up
-                </a>
-              </li>
+              {currentUser ? (
+                <>
+                  <li>
+                    <a
+                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      href="/"
+                    >
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 text-sm capitalize"
+                      href="#"
+                    >
+                      Welcome,{" "}
+                      <span className="font-semibold">
+                        {currentUser.displayName}
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <span
+                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 cursor-pointer"
+                      onClick={signOut}
+                    >
+                      Sign Out
+                    </span>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link href="/login" passHref>
+                      <a className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400">
+                        Login
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/register" passHref>
+                      <a className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400">
+                        Sign Up
+                      </a>
+                    </Link>
+                  </li>
+                </>
+              )}
               <li>
                 {/* <form className="w-full max-w-sm">
                   <div className="flex items-center py-2">

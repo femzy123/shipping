@@ -27,10 +27,10 @@ function Login() {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        console.log(userCredential.user)
+        router.push("/");
       })
-      .then(router.push("/"))
       .catch((error) => alert(error.message));
+      
   };
 
   return (

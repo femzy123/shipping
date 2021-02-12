@@ -1,6 +1,8 @@
-import React from 'react';
-import Table from './Table'
-import styled from 'styled-components'
+import React from "react";
+import Table from "./Table";
+import styled from "styled-components";
+import { useAuth } from "../../contexts/AuthContext";
+import { useRouter } from "next/router";
 
 const Header = styled.div`
   width: 100vw;
@@ -20,13 +22,29 @@ const Container = styled.div`
 `;
 
 function Dashboard() {
+  const { currentUser } = useAuth();
+  const router = useRouter();
+
   return (
     <div>
       <Header>
         <h1 className="text-4xl">Dashboard</h1>
       </Header>
       <Container>
-        <Table />
+        {currentUser ? (
+          <Table />
+        ) : (
+          <h2 className="text-3xl text-center">
+            Please{" "}
+            <span
+              className="text-blue-500 cursor-pointer"
+              onClick={() => router.push("/login")}
+            >
+              Sign In
+            </span>{" "}
+            to access your shipping records.
+          </h2>
+        )}
       </Container>
     </div>
   );
