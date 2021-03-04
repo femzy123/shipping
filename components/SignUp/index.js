@@ -34,6 +34,10 @@ function SignUp() {
         .then((userCredential) => {
           return userCredential.user.updateProfile({
             displayName: name,
+          });
+        })
+        .then((userCredential) => {
+          return userCredential.user.updatePhoneNumber({
             phoneNumber: phone,
           });
         })

@@ -1,8 +1,9 @@
-import React from "react";
-import Table from "./Table";
+import React, { useState, useEffect } from "react";
+import Table from "./DashboardTable";
 import styled from "styled-components";
-import { useAuth } from "../../contexts/AuthContext";
+// import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
+import { db } from "../../firebase";
 
 const Header = styled.div`
   width: 100vw;
@@ -21,9 +22,34 @@ const Container = styled.div`
   }
 `;
 
-function Dashboard() {
-  const { currentUser } = useAuth();
+function Dashboard({ user }) {
+  // const { currentUser } = useAuth();
   const router = useRouter();
+  const [orders, setOrders] = useState([]);
+
+  const fetchData = async () => {
+    const ordersRef = db.collection("shippingOrders");
+    if (user?.uid) {
+      const snapshot = await ordersRef.where("userId", "==", user.uid).get();
+
+      if (snapshot.empty) {
+        console.log("No matching documents.");
+        return;
+      }
+
+      setOrders(
+        snapshot.docs.map((doc) => ({ order: doc.data(), id: doc.id }))
+      );
+    } else {
+      console.log("loading");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [user]);
+
+  
 
   return (
     <div>
@@ -31,8 +57,8 @@ function Dashboard() {
         <h1 className="text-4xl">Dashboard</h1>
       </Header>
       <Container>
-        {currentUser ? (
-          <Table />
+        {user ? (
+          <Table orders={orders} fetchData={fetchData} />
         ) : (
           <h2 className="text-3xl text-center">
             Please{" "}

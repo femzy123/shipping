@@ -108,7 +108,7 @@ function Calculator() {
         <p className="text-xs">Enter your items to get a quote.</p>
       </div>
       <Content>
-        <p>Please choose country you want to ship from -></p>
+        <p>Please choose country you want to ship from {"->"}</p>
         <TextField
           id="standard-select-currency"
           select

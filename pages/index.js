@@ -1,9 +1,11 @@
 import Head from "next/head";
 import Layout from "../components/Layout";
-import Dashboard from "../components/Dashboard";
+import Dashboard from "../components/Dashboard/DashboardContainer";
 import Link from "next/link";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Home() {
+  const { currentUser } = useAuth();
   return (
     <div>
       <Head>
@@ -13,7 +15,7 @@ export default function Home() {
 
       <Layout>
         <div>
-          <Dashboard />
+          <Dashboard user={currentUser} />
         </div>
       </Layout>
     </div>
