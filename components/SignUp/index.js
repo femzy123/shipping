@@ -41,7 +41,8 @@ function SignUp() {
             phoneNumber: phone,
           });
         })
-        .then(router.push("/"))
+        .then(auth.signOut())
+        .then(router.push("/login"))
         .catch((error) => alert(error.message));
     } else {
       alert("Password do not match!")

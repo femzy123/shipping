@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useAuth } from '../../contexts/AuthContext'
 import { auth } from "../../firebase";
 import Link from 'next/link';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 
 const Navigation = () => {
   const { currentUser } = useAuth();
   const router = useRouter();
+  const [hidden, setHidden] = useState("hidden");
+
+  const dropdown = () => hidden === "hidden" ? setHidden("") : setHidden("hidden");
 
   const signOut = () => {
     auth.signOut();
@@ -62,7 +66,7 @@ const Navigation = () => {
                       Dashboard
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a
                       className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 text-sm capitalize"
                       href="#"
@@ -80,6 +84,29 @@ const Navigation = () => {
                     >
                       Sign Out
                     </span>
+                  </li> */}
+                  <li>
+                    <div
+                      className="lg:p-4 py-3 px-0 border-b-2 border-transparent hover:border-indigo-400 cursor-pointer relative"
+                      id="menu-btn"
+                    >
+                      Welcome,{" "}
+                      <span className="font-semibold mr-2">
+                        {currentUser.displayName}
+                      </span>
+                      <ExpandMoreIcon fontSize="small" onClick={dropdown} />
+                      <div
+                        className={`absolute right-0 mt-1 py-1 w-32 bg-white rounded-md shadow-xl z-20 ${hidden}`}
+                        id="dropdown"
+                      >
+                        <span
+                          className="lg:p-4 py-3 px-0 block border-b-2 border-transparent cursor-pointer hover:bg-blue-50"
+                          onClick={signOut}
+                        >
+                          Sign Out
+                        </span>
+                      </div>
+                    </div>
                   </li>
                 </>
               ) : (
