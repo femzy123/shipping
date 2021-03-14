@@ -77,7 +77,7 @@ function ShipmentView({ close, order }) {
             </li>
             <li>
               Name:{" "}
-              <span className="font-semibold">{currentUser.displayName}</span>
+              <span className="font-semibold">{order.order.name}</span>
             </li>
             <li>
               Email: <span className="font-semibold">{currentUser.email}</span>

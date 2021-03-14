@@ -41,6 +41,7 @@ const Countries = [
 
 function NewShipment({ close, fetchData }) {
   const { currentUser } = useAuth();
+  const [name, setName] = useState("");
   const [country, setCountry] = useState("US");
   const [address, setAddress] = useState("");
   const [state, setState] = useState("");
@@ -103,7 +104,7 @@ function NewShipment({ close, fetchData }) {
     if (address !== "" && state !== "" && items[0].name !== "") {
       db.collection("shippingOrders").add({
         userId: currentUser.uid,
-        name: currentUser.displayName,
+        name: name,
         trackingNumber: trackingNumber,
         items: items,
         shippingFrom: country,
@@ -137,6 +138,16 @@ function NewShipment({ close, fetchData }) {
             </MenuItem>
           ))}
         </TextField>
+        <br />
+        <br />
+        <TextField
+          label="Name"
+          fullWidth
+          type="text"
+          className="hover:border-none"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
         <br />
         <br />
 
@@ -204,11 +215,7 @@ function NewShipment({ close, fetchData }) {
           <Button variant="contained" color="secondary" onClick={close}>
             Close
           </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
+          <Button type="submit" variant="contained" color="primary">
             Create Order
           </Button>
         </div>

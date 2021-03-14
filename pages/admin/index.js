@@ -1,26 +1,39 @@
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
-
+import Layout from "../../components/Layout";
+import Dashboard from "../../components/Admin/DashboardContainer";
+import Link from "next/link";
+import { useAuth } from "../../contexts/AuthContext";
+import { db, auth } from "../../firebase";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const { currentUser } = useAuth();
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        setUser(user);
+      } else {
+        router.push("/admin/login");
+      }
+    });
+  }, []);
+
   return (
     <div>
       <Head>
-        <title>Logistics App</title>
+        <title>Admin | Logistics App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Admin Section Here</h1>
-
-      {/* <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" />
-        </a>
-      </footer> */}
+      <Layout>
+        <div>
+          <Dashboard user={currentUser} />
+        </div>
+      </Layout>
     </div>
   );
 }

@@ -66,25 +66,6 @@ const Navigation = () => {
                       Dashboard
                     </a>
                   </li>
-                  {/* <li>
-                    <a
-                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 text-sm capitalize"
-                      href="#"
-                    >
-                      Welcome,{" "}
-                      <span className="font-semibold">
-                        {currentUser.displayName}
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <span
-                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 cursor-pointer"
-                      onClick={signOut}
-                    >
-                      Sign Out
-                    </span>
-                  </li> */}
                   <li>
                     <div
                       className="lg:p-4 py-3 px-0 border-b-2 border-transparent hover:border-indigo-400 cursor-pointer relative"
@@ -92,7 +73,7 @@ const Navigation = () => {
                     >
                       Welcome,{" "}
                       <span className="font-semibold mr-2">
-                        {currentUser.displayName}
+                        {currentUser.email === "admin@splendidpackaging.com" ? "Admin" : currentUser.displayName}
                       </span>
                       <ExpandMoreIcon fontSize="small" onClick={dropdown} />
                       <div
