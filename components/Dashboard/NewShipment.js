@@ -30,18 +30,18 @@ const Content = styled.div`
 
 const Countries = [
   {
-    value: "US",
+    value: "United States of America",
     label: "United States of America",
   },
   {
-    value: "UK",
+    value: "United Kingdom",
     label: "United Kingdom",
   },
 ];
 
 function NewShipment({ close, fetchData }) {
   const { currentUser } = useAuth();
-  const [country, setCountry] = useState("US");
+  const [country, setCountry] = useState("United States of America");
   const [address, setAddress] = useState("");
   const [state, setState] = useState("");
   const [items, setItems] = useState([
