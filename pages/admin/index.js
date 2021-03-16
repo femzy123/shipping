@@ -7,7 +7,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { db, auth } from "../../firebase";
 import { useRouter } from "next/router";
 
-export default function Home() {
+export default function admin() {
   const { currentUser } = useAuth();
   const router = useRouter();
   const [user, setUser] = useState(null);
